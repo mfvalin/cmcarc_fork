@@ -18,6 +18,11 @@ MANDIR=$(SWDEST)/share/man/cat1
 #
 #
 #
+dist: $(EXEC)
+	mv $(EXEC) ../bin
+	cd ../bin ; ln -sf $(EXEC) cmcarc
+	make clean
+
 $(EXEC):	$(OBJECTS)
 	gcc $(CFLAGS) $(OBJECTS) -o $(EXEC) -lm -lcrypto
 	#gcc $(CFLAGS) $(OBJECTS) -o $(EXEC).static -lm -static -lcrypto 

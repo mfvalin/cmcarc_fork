@@ -6,3 +6,5 @@ packageName=${packageHome##*/}
 profilePath=${profileDirPath}/${packageName}.sh
 mkdir -p ${profileDirPath}
 #echo "#${packageName%%_*}_HOME=${packageHome}" >> ${profilePath}
+cd ${packageHome}/src
+make
