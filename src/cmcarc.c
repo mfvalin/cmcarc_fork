@@ -746,7 +746,8 @@ char* hex2string(const unsigned char* str, int size) {
 
   ret[0]='\0';
   for(i=0; i<size; i++) 
-    sprintf(ret, "%s%02x", ret, str[i]);
+    sprintf(ret + 2*i, "%02x", str[i]);      // non overlapping way to do this
+//     sprintf(ret, "%s%02x", ret, str[i]);
 
   ret[2*size]='\0';  /* just to make sure */
 
@@ -1388,6 +1389,7 @@ static int paramInit( char *buff, unsigned long long *nt, unsigned long long *nd
 {
 	char bu[MAX_BU];
 	char cmode[MAX_BU], cuid[MAX_BU],cgid[MAX_BU],cmtime[MAX_BU];
+  size_t max_bu = MAX_BU ;
 	char *p;
 	int lp,np;
 	int i,j;
@@ -1477,11 +1479,11 @@ static int paramInit( char *buff, unsigned long long *nt, unsigned long long *nd
 	}
 
 	if(S_ISLNK(mode)) 
-	  sprintf(bu,"%c%s%c%c%s%c%c%s%c%c%s%c%c%s%c%c%s%c",PCMCC_NOMF,nom,'\0',
+	  snprintf(bu,max_bu,"%c%s%c%c%s%c%c%s%c%c%s%c%c%s%c%c%s%c",PCMCC_NOMF,nom,'\0',
 		PCMCC_MODE,cmode,'\0',PCMCC_UID,cuid,'\0',
 		PCMCC_GID,cgid,'\0',PCMCC_MTIME,cmtime,'\0', PCMCC_LINK, target, '\0');
 	else 
-	  sprintf(bu,"%c%s%c%c%s%c%c%s%c%c%s%c%c%s%c",PCMCC_NOMF,nom,'\0',
+	  snprintf(bu,max_bu,"%c%s%c%c%s%c%c%s%c%c%s%c%c%s%c",PCMCC_NOMF,nom,'\0',
 		PCMCC_MODE,cmode,'\0',PCMCC_UID,cuid,'\0',
 		PCMCC_GID,cgid,'\0',PCMCC_MTIME,cmtime,'\0');  /* cmtime is still dangerous for \0 */
 	  /* sprintf(bu,"%c%s%c%c%s%c%c%s%c%c%s%c%c%c%c%c%c%c",PCMCC_NOMF,nom,'\0',
