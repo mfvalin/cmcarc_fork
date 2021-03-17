@@ -23,7 +23,7 @@
 #define CMCARC_VERSION "cmcarc version 4.3.3u [2021/03/17]\n"
 
 static int cmcarchs_size;
-/* extern enum version_type cmcarc_version; */
+enum version_type cmcarc_version;
 
 static int  decoder( cmcarc THIS, const int argc, const char **argv);
 static int  valider( cmcarc THIS);

@@ -11,7 +11,7 @@
 
 enum version_type { VERSION4, VERSION5 };
 
-/* static */ enum version_type cmcarc_version;   /* denotes which version of cmcarc file we are
+extern enum version_type cmcarc_version;   /* denotes which version of cmcarc file we are
 					 reading.  Note that it can change within a file because
 					 of concatenation  */
 
