@@ -28,28 +28,40 @@ hashtable_iterator(struct hashtable *h);
 /* hashtable_iterator_key
  * - return the value of the (key,value) pair at the current position */
 
-#if !defined(AIX) && !defined(__sgi)
-void *
-hashtable_iterator_key(struct hashtable_itr *i);
-//{
-//    return i->e->k;
-//}
-#else
-//extern void* hashtable_iterator_key(struct hashtable_itr *i);
-#endif   /* already defined in hashtable_itr.c, and since AIX d.n. seem to support inline */
+#define hashtable_iterator_key(i) ((i)->e->k)
+
+// #if !defined(AIX) && !defined(__sgi)
+// #ifndef CMCARC_H
+// static void *
+// #else
+// extern inline void *
+// #endif
+// hashtable_iterator_key(struct hashtable_itr *i)
+// {
+//     return i->e->k;
+// }
+// #else
+// extern void* hashtable_iterator_key(struct hashtable_itr *i);
+// #endif   /* already defined in hashtable_itr.c, and since AIX d.n. seem to support inline */
 
 /*****************************************************************************/
 /* value - return the value of the (key,value) pair at the current position */
 
-#if !defined(AIX) && !defined(__sgi)
-void *
-hashtable_iterator_value(struct hashtable_itr *i);
-//{
-//    return i->e->v;
-//}
-#else
-//extern void * hashtable_iterator_value(struct hashtable_itr *i);
-#endif   /* already defined in hashtable_itr.c, and since AIX d.n. seem to support inline */
+#define hashtable_iterator_value(i) ((i)->e->v)
+
+// #if !defined(AIX) && !defined(__sgi)
+// #ifndef CMCARC_H
+// static void *
+// #else
+// extern inline void *
+// #endif
+// hashtable_iterator_value(struct hashtable_itr *i)
+// {
+//     return i->e->v;
+// }
+// #else
+// extern void * hashtable_iterator_value(struct hashtable_itr *i);
+// #endif   /* already defined in hashtable_itr.c, and since AIX d.n. seem to support inline */
 
 /*****************************************************************************/
 /* advance - advance the iterator to the next element

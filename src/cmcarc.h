@@ -6,6 +6,8 @@
 #define CMCARC_H
 
 #include <sys/types.h>
+#include <libgen.h>
+#include <unistd.h>
 #include "utile.h"
 #include "pcmc.h"
 

@@ -4,9 +4,7 @@
 
 #include "cmcarc.h"
 #include <stdio.h>
-#include <unistd.h>
 #include <string.h>
-#include <libgen.h>
 #include <errno.h>
 #include <time.h>
 #include <sys/stat.h>
@@ -22,7 +20,7 @@
 #endif
 #endif
 
-#define CMCARC_VERSION "cmcarc version 4.3.1u [2016/11/22]\n"
+#define CMCARC_VERSION "cmcarc version 4.3.3u [2021/03/17]\n"
 
 static int cmcarchs_size;
 /* extern enum version_type cmcarc_version; */
@@ -702,7 +700,7 @@ static void usage( void)
 	,"       [-n PREFIX] [-N POSTFIX] [-o] [-O] [-p] [-s] [-t] [-v] [-V] [-x {EXPRESSION}]\n"
 	,"	 [--sequence N | --last] [--dereference] [--md5] [--32 | --64]\n\n"
 	,"	-a : Add files.\n"
-	,"	-b : Number of Kb for transfert buffer.\n"
+	,"	-b : Number of Kb for transfer buffer.\n"
 	,"	-c : Noclobber option (do not overwrite existing file using -x).\n"
 	,"	-e : Execution of a command as each file is extracted.\n"
 	,"	-f : Name of cmcarc file to modify.\n"
@@ -899,7 +897,7 @@ static int table( cmcarc THIS, FILE *out)
 					mtime_tmp = fica->paramInfo(fica,PCMCC_MTIME,0);
 #endif
 					pmtime = ctime(&mtime_tmp);
-					sprintf(mtime_str,"%.12s %.4s\0",&pmtime[4],&pmtime[20]);
+					sprintf(mtime_str,"%.12s %.4s",&pmtime[4],&pmtime[20]);
 
 					if( THIS->inform_detail ) {
 						if( affiche ) {
@@ -1826,7 +1824,7 @@ static int extraction( cmcarc THIS)
 	pcmc ficao;
 	enum pcmc_err en;
 	char *nom;
-        char *key_filename;
+  char *key_filename;
 	struct hashtable  *file_occurence;  /* a hashtable to note the occurence of files
 					       in cmcarc archive.  Used for --sequence and 
 					       --last options */

@@ -502,7 +502,7 @@ int cheminCreer( const char *nom, char *msg)
 	return res;
 }
 
-#define MAX_XREG 2000
+#define MAX_XREG 16000
 
 static struct expreg_s {
 #ifdef _SX
