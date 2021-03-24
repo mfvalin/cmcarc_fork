@@ -531,15 +531,29 @@ static int valider( cmcarc THIS)
    Retour: 0=Ok, -1=Erreur.
 \*----------------------------------------------------------------------------*/
 
+static int TmpNam(char *s, size_t lstr){                     // to replace tmpnam
+  int fd;
+  snprintf(s, lstr, "/tmp/_%p_XXXXXX",&fd); // this filename should be quite unique
+  fd = mkstemp(s) ;
+  if(fd < 0) s[0] = '\0';
+  return fd;
+}
+
+#define L_TEMP_STR 1024
+
 static int executer( cmcarc THIS)
 {
-	int i,r,tmpFile;
-	char n[L_tmpnam];
+	int i,r,tmpFile,fd;
+	char n[L_TEMP_STR];    // 	char n[L_tmpnam];
 	char msg[300], comm[300];
 	char *nl, *p;
 
+  tmpFile = 0;  // safely initialized
+  fd = -1;
+  n[0] = '\0';
 	if( THIS->listei ) {  /* On ne lit pas stdin directement */
-		tmpnam(n);
+		fd = TmpNam(n, sizeof(n));
+		close(fd);
 		tmpFile = 1;
 
 		if( stdinCopier(n) != 0 ) {
@@ -556,7 +570,8 @@ static int executer( cmcarc THIS)
 			nl = THIS->liste;
 			tmpFile = 0;
 		} else {
-			tmpnam(n);
+			fd = TmpNam(n, sizeof(n));
+			close(fd);
 			sprintf(comm,"rcp %s %s",THIS->liste,n);
 
 			if( ligneExecuter(comm,msg) != 0 ) {
@@ -628,8 +643,7 @@ static int executer( cmcarc THIS)
 
 	if( tmpFile ) {
 		if( remove(n) != 0 ) {
-			fprintf(stderr,
-				"Warning: cannot remove temporary file %s.\n",nl);
+			fprintf(stderr,"Warning: cannot remove temporary file %s.\n",n);  // message consistent with remove()
 		}
 	}
 
